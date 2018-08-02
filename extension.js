@@ -40,7 +40,7 @@ class CppFiles {
         this._cwd = vscode.workspace.rootPath;
 
         if (this._platform === "darwin") {
-            //Max OSX
+            //Mac OSX
             this._compilerPath = "";
             this._compilerExe = "g++";
             this._exename = "main";
