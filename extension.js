@@ -41,13 +41,15 @@ class CppFiles {
 
         if (this._platform === "darwin") {
             //Max OSX
-            this._compilerPath = "g++";
+            this._compilerPath = "";
+            this._compilerExe = "g++";
             this._exename = "main";
             this._dbgPath = "gdb";
         }
         else {
             //Assume Windows
-            this._compilerPath = "C:/MinGW/bin/g++.exe";
+            this._compilerPath = "C:/MinGW/bin/";
+            this._compilerExe = "g++.exe";
             this._exename = "main.exe";
             this._dbgPath = "C:/MinGW/bin/gdb.exe";
         }
@@ -79,7 +81,7 @@ class CppFiles {
                     '\t\t\t"defines": [\n' +
                         '\t\t\t\t"_DEBUG"\n'+
                     '\t\t\t],\n'+
-                    '\t\t\t"compilerPath": "' + this._compilerPath + '",\n'+
+                    '\t\t\t"compilerPath": "' + this._compilerPath + this._compilerExe + '",\n'+
                     '\t\t\t"cStandard": "c11",\n'+
                     '\t\t\t"cppStandard": "c++17",\n'+
                     '\t\t\t"intelliSenseMode": "clang-x64"\n'+
@@ -103,7 +105,7 @@ class CppFiles {
                 '\t\t{\n' +
                     '\t\t\t"label": "build project",\n' +
                     '\t\t\t"type": "shell",\n' +
-                    '\t\t\t"command": "' + this._compilerPath + '",\n' +
+                    '\t\t\t"command": "' + this._compilerPath + this._compilerExe + '",\n' +
                     '\t\t\t"args": [\n' +
                         '\t\t\t\t"-o", "${workspaceFolder}/bin/' + this._exename + '",\n' +
                         '\t\t\t\t"-I", "${workspaceFolder}/headers",\n' +
@@ -113,7 +115,10 @@ class CppFiles {
                         '\t\t\t\t"kind":"build",\n' +
                         '\t\t\t\t"isDefault":true\n' +
                     '\t\t\t},\n' +
-                    '\t\t\t"problemMatcher": []\n' +
+                    '\t\t\t"problemMatcher": [],\n' +
+                    '\t\t\t"options": {\n' +
+                    '\t\t\t\t"cwd": "' + this._compilerPath + '"\n' +
+                    '\t\t\t}\n' +
                 '\t\t}\n' +
                 '\t\t,\n' +
                 '\t\t{\n' +
