@@ -119,7 +119,7 @@ class CppFiles {
                 '\t\t{\n' +
                     '\t\t\t"label": "run",\n' +
                     '\t\t\t"type":"shell",\n' +
-                    '\t\t\t"command":"./main",\n' +
+                    '\t\t\t"command":"./bin/' + this._exename + '",\n' +
                     '\t\t\t"problemMatcher":[],\n' +
                 '\t\t}\n' +
             '\t]\n' +
