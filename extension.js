@@ -22,7 +22,7 @@ function activate(context) {
         cppfiles.createFiles();
 
         // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World! We\'re running on ' + os.platform() + ', ' + os.hostname() );
+        vscode.window.showInformationMessage('Welcome to Whitworth CS! We\'re running your CS project on ' + os.platform() + ', ' + os.hostname() + '.' );
     });
 
     context.subscriptions.push(disposable);
