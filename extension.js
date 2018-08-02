@@ -38,6 +38,19 @@ class CppFiles {
     constructor() {
         this._platform = os.platform();
         this._cwd = vscode.workspace.rootPath;
+
+        if (this._platform === "darwin") {
+            //Max OSX
+            this._compilerPath = "g++";
+            this._exename = "main";
+            this._dbgPath = "gdb";
+        }
+        else {
+            //Assume Windows
+            this._compilerPath = "C:/MinGW/bin/g++.exe";
+            this._exename = "main.exe";
+            this._dbgPath = "C:/MinGW/bin/gdb.exe";
+        }
     }
 
     createFiles() {
@@ -66,7 +79,7 @@ class CppFiles {
                     '\t\t\t"defines": [\n' +
                         '\t\t\t\t"_DEBUG"\n'+
                     '\t\t\t],\n'+
-                    '\t\t\t"compilerPath": "C:/MinGW/bin/g++.exe",\n'+
+                    '\t\t\t"compilerPath": "' + this._compilerPath + '",\n'+
                     '\t\t\t"cStandard": "c11",\n'+
                     '\t\t\t"cppStandard": "c++17",\n'+
                     '\t\t\t"intelliSenseMode": "clang-x64"\n'+
@@ -90,9 +103,9 @@ class CppFiles {
                 '\t\t{\n' +
                     '\t\t\t"label": "build project",\n' +
                     '\t\t\t"type": "shell",\n' +
-                    '\t\t\t"command": "c:/mingw/bin/g++.exe",\n' +
+                    '\t\t\t"command": "' + this._compilerPath + '",\n' +
                     '\t\t\t"args": [\n' +
-                        '\t\t\t\t"-o", "${workspaceFolder}/bin/main.exe",\n' +
+                        '\t\t\t\t"-o", "${workspaceFolder}/bin/' + this._exename + '",\n' +
                         '\t\t\t\t"-I", "${workspaceFolder}/headers",\n' +
                         '\t\t\t\t"-ggdb", "${workspaceFolder}/source/*.cpp"\n' +
                     '\t\t\t],\n' +
@@ -122,14 +135,14 @@ class CppFiles {
                     '\t\t\t"name": "(gdb) Launch",\n' +
                     '\t\t\t"type": "cppdbg",\n' +
                     '\t\t\t"request": "launch",\n' +
-                    '\t\t\t"program": "${workspaceFolder}/bin/main.exe",\n' +
+                    '\t\t\t"program": "${workspaceFolder}/bin/' + this._exename + '",\n' +
                     '\t\t\t"args": [],\n' +
                     '\t\t\t"stopAtEntry": false,\n' +
                     '\t\t\t"cwd": "${workspaceFolder}",\n' +
                     '\t\t\t"environment": [],\n' +
                     '\t\t\t"externalConsole": true,\n' +
                     '\t\t\t"MIMode": "gdb",\n' +
-                    '\t\t\t"miDebuggerPath": "C:/MinGW/bin/gdb.exe",\n' +
+                    '\t\t\t"miDebuggerPath": "' + this._dbgPath + '",\n' +
                     '\t\t\t"setupCommands": [\n' +
                         '\t\t\t\t{\n' +
                             '\t\t\t\t\t"description": "Enable pretty-printing for gdb",\n' +
