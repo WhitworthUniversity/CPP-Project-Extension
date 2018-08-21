@@ -11,16 +11,68 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.createCppProj"
+        "onCommand:extension.createCppProj",
+        "onView:cpp-tools",
+        "onCommand:extension.createAsmProj",
+        "onView:asm-tools"
     ],
-    "main": "./extension",
+    "main": "./out/extension",
     "contributes": {
         "commands": [
             {
+                "command": "extension.chooseCppProjFolder",
+                "title": "Choose a C++ Project Folder"
+            },
+            {
                 "command": "extension.createCppProj",
-                "title": "Create C++ Project"
+                "title": "Make C++ Project Files "
+            },
+            {
+                "command": "'extension.CppTips",
+                "title": "Run or Debug a C++ Project"
+            },
+            {
+                "command": "extension.chooseAsmProjFolder",
+                "title": "Choose an Assembler Project Folder"
+            },
+            {
+                "command": "extension.createAsmProj",
+                "title": "Make Assembler Project Files "
+            },
+            {
+                "command": "'extension.AsmTips",
+                "title": "Run or Debug an Assembler Project"
             }
-        ]
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "whitworth",
+                    "title": "Whitworth",
+                    "icon": "./images/whitworth.png"
+                }
+            ]
+        },
+        "views": {
+            "whitworth": [
+                {
+                    "id": "cpp-tools",
+                    "name": "C++ Tools"
+                },
+                {
+                    "id": "asm-tools",
+                    "name": "Assembler Tools"
+                },
+                {
+                    "id": "web-dev-tools",
+                    "name": "Web Development Tools"
+                },
+                {
+                    "id": "parallel-highperf-tools",
+                    "name": "Parllel & High Performance Tools"
+                }
+            ]
+        }
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
@@ -29,12 +81,16 @@
     "devDependencies": {
         "typescript": "^2.6.1",
         "vscode": "^1.1.6",
-        "eslint": "^4.11.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "eslint": "^4.19.1"
     },
     "repository": {
         "type": "git",
         "url": "https://whitworthcs.visualstudio.com/WhitworthCppProjectExtension/_git/WhitworthCppProjectExtension"
+    },
+    "dependencies": {
+        "npm": "^6.4.0",
+        "tslint": "^5.11.0"
     }
 }
