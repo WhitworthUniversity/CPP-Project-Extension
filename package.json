@@ -14,6 +14,7 @@
         "onCommand:extension.createCppProj",
         "onView:cpp-tools",
         "onCommand:extension.createAsmProj64",
+        "onCommand:extension.createAsmProj32",
         "onView:asm-tools"
     ],
     "main": "./out/extension",
@@ -37,8 +38,12 @@
             },
             {
                 "command": "extension.createAsmProj64",
-                "title": "Make Assembler Project Files"
+                "title": "Make 64 Bit Assembler Project Files"
             },
+            {
+                "command": "extension.createAsmProj32",
+                "title": "Make 32 Bit Assembler Project Files"
+            },            
             {
                 "command": "'extension.AsmTips",
                 "title": "Run or Debug an Assembler Project"

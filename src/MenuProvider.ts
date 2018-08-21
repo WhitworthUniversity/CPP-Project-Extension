@@ -55,6 +55,12 @@ export class MenuProvider implements vscode.TreeDataProvider<Dependency> {
 									title: 'Choose an Assembler Project Folder...', 
 									arguments: [] 
 								} ),
+					new Dependency( "Make a 32 Bit Assembler Project in the Current Folder...", 
+								"command_createAsmProj32", vscode.TreeItemCollapsibleState.None, 
+								{ command: 'extension.createAsmProj32', 
+								title: '"Make a 64 Bit Assembler Project Files in the Current Folder', 
+								arguments: [] 
+							} ),	
 					new Dependency( "Make a 64 Bit Assembler Project in the Current Folder...", 
 									"command_createAsmProj64", vscode.TreeItemCollapsibleState.None, 
 									{ command: 'extension.createAsmProj64', 

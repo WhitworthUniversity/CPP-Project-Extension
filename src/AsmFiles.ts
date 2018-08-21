@@ -30,12 +30,20 @@ export class AsmFiles {
         }
     }
 
+    createFiles32() {
+        this._checkVscodeFolder();
+        this._createFolders();
+        this._createTasksFile();
+        this._createBuildScript32();        
+        this._createDebugScript(); 
+    }
+
     createFiles64() {
         this._checkVscodeFolder();
         this._createFolders();
         this._createTasksFile();
-        this._createBuildScript64();
-        this._createDebugScript64();
+        this._createBuildScript64();      
+        this._createDebugScript();
     }
 
     _checkVscodeFolder() {
@@ -43,8 +51,6 @@ export class AsmFiles {
         if (!fs.existsSync(vscodefolder))
             fs.mkdirSync(vscodefolder);
     }
-
-
 
     _createTasksFile() {
 
@@ -79,6 +85,45 @@ export class AsmFiles {
         });
     }
 
+    _createBuildScript32() {
+        var buildScript = '' +
+            '<# Build Script to Build 64 Bit Assembler Files using Microsofts Assembler\n' +
+            'Reference for visual studio code tasks used in development: https://code.visualstudio.com/docs/editor/tasks\n' +
+            'Reference for assembler command line options: ml64.exe /?  will list the command line options\n' +
+            '#>\n' +
+            'param (\n' +
+                '\t[string]\$workspaceFolder = "."\n' +
+            ')\n' +
+            'cd "\$workspaceFolder\/bin\/"\n' +
+            '\$assemblerfiles="" + (get-item \$workspaceFolder\/source\/*.asm)\n' +
+            'if ( -not \$assemblerfiles) {\n' +
+                '\techo "No files to compile!"\n' +
+                '\texit\n' +
+            '}\n'+
+            '\$exefile="\$workspaceFolder\/bin\/main.exe"\n' +
+            '# Set the 64 bit development environment by calling vcvars64.bat \n' +
+            '# Compile and link in one step using ml64.exe \n' +
+            '\$ranstring = -join ((48..57) + (97..122) | Get-Random -Count 32 | % {[char]$_})\n' +
+            '\$batfile = "\$workspaceFolder\/.vscode\/" + \$ranstring + ".bat"\n' +
+            '\$command = \'"C:\/Program Files (x86)\/Microsoft Visual Studio 14.0\/VC\/bin\/vcvars32.bat"\'\n' +
+            'echo \$command > \$batfile\n' +
+            '\$command = \'"C:\/Program Files (x86)\/Microsoft Visual Studio 14.0\/VC\/bin\/ml.exe"\' + " /nologo /Sg /WX /Zi /I C:\\Irvine /W3 /Fe " + \$exefile + " /errorReport:prompt /Ta " + \$assemblerfiles + \' /link /ENTRY:"main" /LARGEADDRESSAWARE:NO C:/Irvine/Irvine32.lib kernel32.lib \'\n' +
+            'echo \$command >> \$batfile\n' +
+            "type \$batfile | CMD\n" +
+            '\$' + 'ofiles' + " =\ " + "\(" + "get-item " + "*.obj" + "\)" + "\n" +
+            "if " + "\(" + "\$" + "ofiles" + "\)" + "{\n" +
+            "\t\trm\ " + "\$" + "ofiles" + "\n" +
+            "\}" + "\n" +
+            "rm " + "\$" + "batfile" + "\n";
+
+        fs.writeFile(this._cwd + '/.vscode/assemble.ps1', buildScript, (err) => {
+            if (err) {
+                throw err;
+            } else {
+                console.log('The build script has been saved');
+            }
+        });
+    }
     _createBuildScript64() {
         var buildScript = '' +
             '<# Build Script to Build 64 Bit Assembler Files using Microsofts Assembler\n' +
@@ -101,7 +146,7 @@ export class AsmFiles {
             '\$batfile = "\$workspaceFolder\/.vscode\/" + \$ranstring + ".bat"\n' +
             '\$command = \'"C:\/Program Files (x86)\/Microsoft Visual Studio 14.0\/VC\/bin\/amd64\/vcvars64.bat"\'\n' +
             'echo \$command > \$batfile\n' +
-            '\$command = \'"C:\/Program Files (x86)\/Microsoft Visual Studio 14.0\/VC\/bin\/amd64\/ml64.exe"\' + " /nologo /Zi /Zd /Fe " + \$exefile + " /W3 /errorReport:prompt /Ta " + \$assemblerfiles + \' /link /ENTRY:"main" /LARGEADDRESSAWARE:NO C:/Irvine/Irvine64.obj kernel32.lib \'\n' +
+            '\$command = \'"C:\/Program Files (x86)\/Microsoft Visual Studio 14.0\/VC\/bin\/amd64\/ml64.exe"\' + " /nologo /Zi /Zd /I C:\\Irvine /Fe " + \$exefile + " /W3 /errorReport:prompt /Ta " + \$assemblerfiles + \' /link /ENTRY:"main" /LARGEADDRESSAWARE:NO C:/Irvine/Irvine64.obj kernel32.lib \'\n' +
             'echo \$command >> \$batfile\n' +
             "type \$batfile | CMD\n" +
             '\$' + 'ofiles' + " =\ " + "\(" + "get-item " + "*.obj" + "\)" + "\n" +
@@ -119,7 +164,7 @@ export class AsmFiles {
         });
     }
 
-    _createDebugScript64() {
+    _createDebugScript() {
         var debugScript = ''+
             '<# Debug Script\n' + 
             'Reference used in development: https://social.msdn.microsoft.com/Forums/vstudio/en-US/3d854f8d-3597-423c-853a-ba030e721d6e/visual-studio-debugger-command-line?forum=vcgeneral\n' +

@@ -86,7 +86,18 @@ function activateAsmTools(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(command_chooseAsmProjFolder);
 
-    let command_createAsmpProj = vscode.commands.registerCommand('extension.createAsmProj64', function () {
+    let command_createAsmpProj32 = vscode.commands.registerCommand('extension.createAsmProj32', function () {
+        // The code you place here will be executed every time your command is executed
+        var asmfiles = new AsmFiles();
+        asmfiles.createFiles32();
+
+        // Display a message box to the user
+        vscode.window.showInformationMessage('Welcome to Whitworth CS! We\'re running your CS project on ' + os.platform() + ', ' + os.hostname() + '.' );
+    });
+    context.subscriptions.push(command_createAsmpProj32);     // Register the Asm Project Command
+
+
+    let command_createAsmpProj64 = vscode.commands.registerCommand('extension.createAsmProj64', function () {
         // The code you place here will be executed every time your command is executed
         var asmfiles = new AsmFiles();
         asmfiles.createFiles64();
@@ -94,7 +105,8 @@ function activateAsmTools(context: vscode.ExtensionContext) {
         // Display a message box to the user
         vscode.window.showInformationMessage('Welcome to Whitworth CS! We\'re running your CS project on ' + os.platform() + ', ' + os.hostname() + '.' );
     });
-    context.subscriptions.push(command_createAsmpProj);     // Register the Asm Project Command
+    context.subscriptions.push(command_createAsmpProj64);     // Register the Asm Project Command
+
 
     let command_AsmTips = vscode.commands.registerCommand('extension.AsmTips', () => {
         // The code you place here will be executed every time your command is executed
