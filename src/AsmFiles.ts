@@ -9,6 +9,10 @@ export class AsmFiles {
 
     private _platform;
     private _cwd;
+    private _compilerPath;
+    private _compilerExe;
+    private _exename;
+    private _dbgPath;
 
     constructor() {
         this._platform = os.platform();
@@ -19,15 +23,19 @@ export class AsmFiles {
         }
         else {
             //Assume Windows
+            this._compilerPath = "\${workspaceFolder}/.vscode/";
+            this._compilerExe = "\${workspaceFolder}/.vscode/assemble.ps1";
+            this._exename = "main.exe";
+            this._dbgPath = "\${workspaceFolder}/.vscode/";
         }
     }
 
-    createFiles() {
+    createFiles64() {
         this._checkVscodeFolder();
         this._createFolders();
         this._createTasksFile();
-        this._createBuildScript();
-        this._createDebugScript();
+        this._createBuildScript64();
+        this._createDebugScript64();
     }
 
     _checkVscodeFolder() {
@@ -35,6 +43,8 @@ export class AsmFiles {
         if (!fs.existsSync(vscodefolder))
             fs.mkdirSync(vscodefolder);
     }
+
+
 
     _createTasksFile() {
 
@@ -69,9 +79,9 @@ export class AsmFiles {
         });
     }
 
-    _createBuildScript() {
+    _createBuildScript64() {
         var buildScript = '' +
-            '<# Build Script to Build 64 Bit Assembler Files\n' +
+            '<# Build Script to Build 64 Bit Assembler Files using Microsofts Assembler\n' +
             'Reference for visual studio code tasks used in development: https://code.visualstudio.com/docs/editor/tasks\n' +
             'Reference for assembler command line options: ml64.exe /?  will list the command line options\n' +
             '#>\n' +
@@ -109,7 +119,7 @@ export class AsmFiles {
         });
     }
 
-    _createDebugScript() {
+    _createDebugScript64() {
         var debugScript = ''+
             '<# Debug Script\n' + 
             'Reference used in development: https://social.msdn.microsoft.com/Forums/vstudio/en-US/3d854f8d-3597-423c-853a-ba030e721d6e/visual-studio-debugger-command-line?forum=vcgeneral\n' +
@@ -139,6 +149,10 @@ export class AsmFiles {
             if (err) throw err;
             console.log('The debug script has been saved');
         });
+    }
+
+    _createLaunchFile64() {
+        // TODO - see if we can configure launch tasks for assembler...
     }
 
     _createFolders() {

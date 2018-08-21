@@ -13,7 +13,7 @@
     "activationEvents": [
         "onCommand:extension.createCppProj",
         "onView:cpp-tools",
-        "onCommand:extension.createAsmProj",
+        "onCommand:extension.createAsmProj64",
         "onView:asm-tools"
     ],
     "main": "./out/extension",
@@ -25,7 +25,7 @@
             },
             {
                 "command": "extension.createCppProj",
-                "title": "Make C++ Project Files "
+                "title": "Make C++ Project Files"
             },
             {
                 "command": "'extension.CppTips",
@@ -36,8 +36,8 @@
                 "title": "Choose an Assembler Project Folder"
             },
             {
-                "command": "extension.createAsmProj",
-                "title": "Make Assembler Project Files "
+                "command": "extension.createAsmProj64",
+                "title": "Make Assembler Project Files"
             },
             {
                 "command": "'extension.AsmTips",

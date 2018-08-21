@@ -51,7 +51,7 @@ function activateCppTools(context: vscode.ExtensionContext) {
     let command_CppTips = vscode.commands.registerCommand('extension.CppTips', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        vscode.window.showInformationMessage('Select Tasks | Run Task and select the type of task you wan to run.');
+        vscode.window.showInformationMessage('Select Tasks | Run Task and select the type of task you want to run.');
     });
     context.subscriptions.push(command_CppTips);
 
@@ -86,10 +86,10 @@ function activateAsmTools(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(command_chooseAsmProjFolder);
 
-    let command_createAsmpProj = vscode.commands.registerCommand('extension.createAsmProj', function () {
+    let command_createAsmpProj = vscode.commands.registerCommand('extension.createAsmProj64', function () {
         // The code you place here will be executed every time your command is executed
         var asmfiles = new AsmFiles();
-        asmfiles.createFiles();
+        asmfiles.createFiles64();
 
         // Display a message box to the user
         vscode.window.showInformationMessage('Welcome to Whitworth CS! We\'re running your CS project on ' + os.platform() + ', ' + os.hostname() + '.' );
@@ -99,7 +99,7 @@ function activateAsmTools(context: vscode.ExtensionContext) {
     let command_AsmTips = vscode.commands.registerCommand('extension.AsmTips', () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        vscode.window.showInformationMessage('Select Tasks | Run Task and select the type of task you wan to run.');
+        vscode.window.showInformationMessage('Select Tasks | Run Task and select the type of task you want to run.');
     });
     context.subscriptions.push(command_AsmTips);
 
